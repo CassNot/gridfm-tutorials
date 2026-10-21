@@ -1,0 +1,21 @@
+name: gridfm-viz
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  # OpenBLAS instead of MKL: with some conda-forge MKL builds numpy/matplotlib
+  # crash on Windows (native error 0xc06d007f).
+  - libblas=*=*openblas
+  - numpy
+  - scipy
+  - matplotlib
+  - jupyterlab
+  - ipykernel
+  - pip:
+      # CPU-only PyTorch (no CUDA download); gridfm-graphkit accepts torch >=2.10,<2.13.
+      - --extra-index-url https://download.pytorch.org/whl/cpu
+      - torch==2.12.*
+      # Fixes for issue #42 are not released yet. After the merge and release,
+      # replace this line with: gridfm-graphkit
+      - gridfm-graphkit @ git+https://github.com/CassNot/gridfm-graphkit.git@issue-42
